@@ -45,6 +45,8 @@ export default function ParallaxScrollView({
   });
 
   return (
+    <></>
+    /*
     <ThemedView style={styles.container}>
       <Animated.ScrollView
         ref={scrollRef}
@@ -62,7 +64,9 @@ export default function ParallaxScrollView({
         <ThemedView style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
     </ThemedView>
+    */
   );
+  
 }
 
 const styles = StyleSheet.create({

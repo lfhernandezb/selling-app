@@ -2,25 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Button, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 
-export type Product = {
-  id: number;
-  title: string;
-  price: number;
-  stock: number;
-  description: string;
-  images: string[];
-  thumbnail: string;
-  reviews: string[];
-  rating: number;
-  brand: string;
-  category: string;
-  sku: string;
-  // size: string[];
-  // color: string[];
-  // previousPrice: number;
-};
-
 import { NavigationProp } from '@react-navigation/native';
+import { getProducts } from '../services/product.service';
+import { Product } from '../model/product.model';
 
 type Props = {
   navigation: NavigationProp<any>;
@@ -41,8 +25,8 @@ export default function ProductsScreen({ navigation }: Props) {
     setLoading(true);
 
     try {
-      const response = await axios.get(`https://dummyjson.com/products?limit=${limit}&skip=${(page - 1) * limit}`);
-      const newProducts = (response.data as { products: Product[] }).products;
+      // const response = await axios.get(`https://dummyjson.com/products?limit=${limit}&skip=${(page - 1) * limit}`);
+      const newProducts = await getProducts(page, limit); //(response.data as { products: Product[] }).products;
       
       setProducts((prevProducts) => [...prevProducts, ...newProducts]);
       setPage(page + 1);
@@ -69,7 +53,7 @@ export default function ProductsScreen({ navigation }: Props) {
               
               <Text style={styles.productName}>{item.title}</Text>
               <Text style={styles.price}>${item.price}</Text>
-              <img className="profile-photo" src={item.thumbnail} alt={item.title}/>
+              {/* <img className="profile-photo" src={item.thumbnail} alt={item.title}/> */}
             </View>
           </TouchableOpacity>
         )}
@@ -95,12 +79,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   thumbnail: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 5,
     marginRight: 15,
   },
-  productName: { fontSize: 18, fontWeight: 'bold' },
-  price: { fontSize: 16, color: 'green' },
+  productName: { fontSize: 14, fontWeight: 'bold' },
+  price: { fontSize: 14, color: 'green' },
   footer: { padding: 10, alignItems: 'center' },
 });

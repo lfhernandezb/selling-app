@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../index';
-import Product from './ProductsScreen'
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import { BiShoppingBag } from 'react-icons/bi';
@@ -43,9 +42,9 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
             showBullets={false}
             showFullscreenButton={false}
             showPlayButton={false}
-            items={product.images.map((image) => ({
+            items={product.images.map((image: string) => ({
               original: product.thumbnail,
-            //   thumbnail: product.thumbnail,
+              // thumbnail: product.thumbnail,
             }))}
           />
   
