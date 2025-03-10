@@ -16,7 +16,7 @@ export type RootStackParamList = {
   ClientDetail: { client: Client };
   Products: undefined;
   ProductDetail: { product: Product };
-  Orders: { clientId?: number };
+  Orders: { client?: Client };
   OrderDetail: { orderId: number };
 };
 const Stack = createStackNavigator<RootStackParamList>();

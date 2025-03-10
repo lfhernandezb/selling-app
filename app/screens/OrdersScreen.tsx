@@ -20,10 +20,10 @@ export default function OrdersScreen({ route, navigation }: Props) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const limit = 10; // Items per page
-  const clientId = route.params?.clientId;
+  const client = route.params?.client;
   let newOrders : Order[] = [];
 
-  console.log("clientId: ", clientId);
+  console.log("client: ", client);
 
   useEffect(() => {
     fetchOrders();
@@ -35,9 +35,9 @@ export default function OrdersScreen({ route, navigation }: Props) {
 
     try {
 
-      if (clientId) {
+      if (client) {
         // const response = await axios.get(`https://dummyjson.com/carts/user/${clientId}?limit=${limit}&skip=${(page - 1) * limit}`);
-        newOrders =  await getOrdersByClientId(page, limit, clientId); //(response.data as { orders: Order[] }).orders;
+        newOrders =  await getOrdersByClientId(page, limit, client.id); //(response.data as { orders: Order[] }).orders;
       } else {
         // const response = await axios.get(`https://dummyjson.com/carts?limit=${limit}&skip=${(page - 1) * limit}`);
         newOrders =  await getOrders(page, limit); //(response.data as { orders: Order[] }).orders;
@@ -74,6 +74,10 @@ export default function OrdersScreen({ route, navigation }: Props) {
 
     <View style={styles.container}>
       <Text style={styles.title}>Orders</Text>
+      {/* if clientId is not undefined, I display the name of the client */}
+      {client && 
+        <Text style={styles.title}>Client: {client.firstName} {client.lastName}</Text>
+      }
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id.toString()}
@@ -83,10 +87,9 @@ export default function OrdersScreen({ route, navigation }: Props) {
             onPress={() => navigation.navigate('OrderDetail', { orderId: item.id })}
           >
             {/*<Image source={{ uri: item.thumbnail }} style={styles.thumbnail} /> */}
-            <View style={styles.card}>
+            <View style={styles.cardText}>
               
               <Text style={styles.orderName}>Order #{item.id}</Text>
-              <Text style={styles.orderName}>{item.client?.firstName} {item.client?.lastName}</Text>
               <Text style={styles.orderName}>${item.total}</Text>
               {/* <img className="profile-photo" src={item.thumbnail} alt={item.title}/> */}
             </View>
@@ -121,6 +124,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  cardText: {
+    flexDirection: 'column',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'flex-start',
   },
   thumbnail: {
     width: 40,

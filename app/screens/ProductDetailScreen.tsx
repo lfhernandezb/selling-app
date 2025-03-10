@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../index';
@@ -20,23 +20,10 @@ interface Props {
 export default function ProductDetailScreen({ route, navigation }: Props) {
   const { product } = route.params;
 
-  /*
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>Price: ${product.price}</Text>
-      <Text style={styles.description}>
-        This is a detailed description of the product "{product.name}". It has amazing features!
-      </Text>
-    
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-  */
- 
     return (
+        /*
         <section className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
-        {/* image gallery */}
+
         <div className="container mx-auto px-4">
            <ReactImageGallery
             showBullets={false}
@@ -48,9 +35,8 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
             }))}
           />
   
-          {/* /image gallery  */}
+
         </div>
-        {/* description  */}
   
         <div className="mx-auto px-5 lg:px-5">
           <h2 className="pt-3 text-2xl font-bold lg:pt-0">
@@ -66,9 +52,6 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
                 />
               </div>
   
-{/*               <p className="ml-3 text-sm text-gray-400">
-                ({product.reviews})
-              </p> */}
             </div>
           </div>
           <p className="mt-5 font-bold">
@@ -91,41 +74,16 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
           </p>
           <p className="mt-4 text-4xl font-bold text-violet-900">
             ${product.price}{" "}
-{/*             <span className="text-xs text-gray-400 line-through">
-              ${product.previousPrice}
-            </span>
- */}          </p>
+          </p>
           <p className="pt-5 text-sm leading-5 text-gray-500">
             {product.description}
           </p>
           <div className="mt-6">
             <p className="pb-2 text-xs text-gray-500">Size</p>
-{/*             <div className="flex gap-1">
-              {product.size.map((x, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
-                  >
-                    {x}
-                  </div>
-                );
-              })}
-            </div>
- */}          </div>
+          </div>
           <div className="mt-6">
             <p className="pb-2 text-xs text-gray-500">Color</p>
-{/*             <div className="flex gap-1">
-              {product.color.map((x, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`h-8 w-8 cursor-pointer border border-white bg-${x}-600 focus:ring-2 focus:ring-${x}-500 active:ring-2 active:ring-${x}-500`}
-                  />
-                );
-              })}
-            </div>
- */}          </div>
+          </div>
           <div className="mt-6">
             <p className="pb-2 text-xs text-gray-500">Quantity</p>
             <div className="flex">
@@ -148,12 +106,64 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
           </div>
         </div>
       </section>
+      */
+      <View style={styles.container}>
+      <Text style={styles.title}>{product.title}</Text>
+      <Image source={{ uri: product.thumbnail }} style={styles.thumbnail} />
+      <View style={styles.cardText}>
+            
+            {product.stock > 0 ? (
+              <Text style={styles.phone}>Availability: In stock</Text>
+            ) : (
+              <Text style={styles.phone}>Availability: Expired</Text>
+            )}
+            <Text style={styles.phone}>Brand: {product.brand}</Text>
+            <Text style={styles.phone}>Category: {product.category}</Text>
+            <Text style={styles.phone}>SKU: {product.sku}</Text>
+            <Text style={styles.phone}>Price: {product.price}</Text>
+            <Text style={styles.phone}>{product.description}</Text>
+      </View>
+    </View>
+
     );
 }
 
+/*
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center' },
   title: { fontSize: 26, fontWeight: 'bold', marginBottom: 10 },
   price: { fontSize: 20, color: 'green', marginBottom: 10 },
   description: { fontSize: 16, textAlign: 'center', marginBottom: 20 },
 });
+*/
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20 },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
+  card: {
+    flexDirection: 'row',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  cardText: {
+    flexDirection: 'column',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'flex-start',
+  },
+  thumbnail: {
+    width: 200,
+    height: 200,
+    borderRadius: 5,
+    marginRight: 15,
+  },
+  clientName: { fontSize: 14, fontWeight: 'bold' },
+  phone: { fontSize: 14, color: 'green' },
+  footer: { padding: 10, alignItems: 'center' },
+});
+

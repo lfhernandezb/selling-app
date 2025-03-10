@@ -7,6 +7,7 @@ import 'react-rater/lib/react-rater.css';
 import { BiShoppingBag } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
 import ReactImageGallery from 'react-image-gallery';
+import { Client } from '../model/client.model';
 
 type ClientDetailRouteProp = RouteProp<RootStackParamList, 'ClientDetail'>;
 type ClientDetailNavigationProp = StackNavigationProp<RootStackParamList, 'ClientDetail'>;
@@ -19,72 +20,102 @@ interface Props {
 export default function ClientDetailScreen({ route, navigation }: Props) {
   const { client } = route.params;
 
-  function showClientOrders(id: number): React.MouseEventHandler<HTMLButtonElement> | undefined {
+  function showClientOrders(client: Client): () => void {
     return () => {
-      navigation.navigate('Orders', { clientId: id });
+      navigation.navigate('Orders', { client: client });
     };
   }
-  /*
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{client.name}</Text>
-      <Text style={styles.price}>Price: ${client.price}</Text>
-      <Text style={styles.description}>
-        This is a detailed description of the client "{client.name}". It has amazing features!
-      </Text>
-    
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-  */
  
-    return (
-        <section className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
-        {/* description  */}
-  
-        <div className="mx-auto px-5 lg:px-5">
-          <h2 className="pt-3 text-2xl font-bold lg:pt-0">
-            {client.firstName} {client.lastName}
-          </h2>
-          <p className="font-bold">
-            Email: <span className="font-normal">{client.email}</span>
-          </p>
-          <p className="font-bold">
-            Phone:{" "}
-            <span className="font-normal">{client.phone}</span>
-          </p>
-          <p className="font-bold">
-            <span className="font-normal">Adress</span>
-          </p>
-          <p className="font-bold">
-            Street: <span className="font-normal">{client.address.address}</span>
-          </p>
-          <p className="font-bold">
-            City: <span className="font-normal">{client.address.city}</span>
-          </p>
-          <p className="font-bold">
-            State: <span className="font-normal">{client.address.state}</span>
-          </p>
-          <p className="font-bold">
-            State Code: <span className="font-normal">{client.address.stateCode}</span>
-          </p>
-          <p className="font-bold">
-            Country: <span className="font-normal">{client.address.country}</span>
-          </p>
-          <div className="mt-7 flex flex-row items-center gap-6">
-            <button className="flex h-12 w-1/3 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800" onClick={showClientOrders(client.id)}>
-              <BiShoppingBag className="mx-2" />
-              Orders
-            </button>
-          </div>
+  return (
+    /*
+      <section className="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-cols-2 lg:py-10">
+
+      <div className="mx-auto px-5 lg:px-5">
+        <h2 className="pt-3 text-2xl font-bold lg:pt-0">
+          {client.firstName} {client.lastName}
+        </h2>
+        <p className="font-bold">
+          Email: <span className="font-normal">{client.email}</span>
+        </p>
+        <p className="font-bold">
+          Phone:{" "}
+          <span className="font-normal">{client.phone}</span>
+        </p>
+        <p className="font-bold">
+          <span className="font-normal">Adress</span>
+        </p>
+        <p className="font-bold">
+          Street: <span className="font-normal">{client.address.address}</span>
+        </p>
+        <p className="font-bold">
+          City: <span className="font-normal">{client.address.city}</span>
+        </p>
+        <p className="font-bold">
+          State: <span className="font-normal">{client.address.state}</span>
+        </p>
+        <p className="font-bold">
+          State Code: <span className="font-normal">{client.address.stateCode}</span>
+        </p>
+        <p className="font-bold">
+          Country: <span className="font-normal">{client.address.country}</span>
+        </p>
+        <div className="mt-7 flex flex-row items-center gap-6">
+          <button className="flex h-12 w-1/3 items-center justify-center bg-violet-900 text-white duration-100 hover:bg-blue-800" onClick={showClientOrders(client)}>
+            <BiShoppingBag className="mx-2" />
+            Orders
+          </button>
         </div>
-      </section>
-    );
+      </div>
+    </section>
+    */
+
+    <View style={styles.container}>
+      <Text style={styles.title}>Client: {client.firstName} {client.lastName}</Text>
+      <View style={styles.cardText}>
+            
+            <Text style={styles.phone}>Phone: {client.phone}</Text>
+            <Text style={styles.phone}>Email: {client.email}</Text>
+            <Text style={styles.phone}>Adress</Text>
+            <Text style={styles.phone}>Street: {client.address.address}</Text>
+            <Text style={styles.phone}>City: {client.address.city}</Text>
+            <Text style={styles.phone}>State: {client.address.state}</Text>
+            <Text style={styles.phone}>State Code: {client.address.stateCode}</Text>
+            <Text style={styles.phone}>Country: {client.address.country}</Text>
+            <View style={styles.footer}>
+              <Button title="Orders" onPress={() => showClientOrders(client)()} />
+            </View>
+      </View>
+    </View>
+
+  );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 26, fontWeight: 'bold', marginBottom: 10 },
-  price: { fontSize: 20, color: 'green', marginBottom: 10 },
-  description: { fontSize: 16, textAlign: 'center', marginBottom: 20 },
+  container: { flex: 1, padding: 20 },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
+  card: {
+    flexDirection: 'row',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  cardText: {
+    flexDirection: 'column',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'flex-start',
+  },
+  thumbnail: {
+    width: 40,
+    height: 40,
+    borderRadius: 5,
+    marginRight: 15,
+  },
+  clientName: { fontSize: 14, fontWeight: 'bold' },
+  phone: { fontSize: 14, color: 'green' },
+  footer: { padding: 10, alignItems: 'center' },
 });

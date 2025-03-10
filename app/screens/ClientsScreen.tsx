@@ -38,23 +38,6 @@ export default function ClientsScreen({ navigation }: Props) {
   };
 
   return (
-    /*
-    <View style={styles.container}>
-      <Text style={styles.title}>Clients</Text>
-      <FlatList
-        data={clients}
-        keyExtractor={(client) => client.id}
-        renderItem={({ client }) => (
-          <View style={styles.card}>
-            <Text>{client.firstName} {client.lastName}</Text>
-            <Text>{client.email}</Text>
-            <Text>{client.phone}</Text>
-          </View>
-        )}
-      />
-    </View>
-    */
-
     <View style={styles.container}>
       <Text style={styles.title}>Clients</Text>
       <FlatList
@@ -66,10 +49,10 @@ export default function ClientsScreen({ navigation }: Props) {
             onPress={() => navigation.navigate('ClientDetail', { client: item })}
           >
             {/*<Image source={{ uri: client.thumbnail }} style={styles.thumbnail} /> */}
-            <View style={styles.card}>
+            <View style={styles.cardText}>
               
-              <Text style={styles.clientName}>{item.firstName} {item.lastName}</Text>
-              <Text style={styles.phone}>{item.phone}</Text>
+              <Text style={styles.clientName}>Name: {item.firstName} {item.lastName}</Text>
+              <Text style={styles.phone}>Phone: {item.phone}</Text>
               {/* <img className="profile-photo" src={client.thumbnail} alt={client.title}/> */}
             </View>
           </TouchableOpacity>
@@ -103,6 +86,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  cardText: {
+    flexDirection: 'column',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'flex-start',
   },
   thumbnail: {
     width: 40,

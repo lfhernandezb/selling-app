@@ -58,7 +58,7 @@ export default function OrderDetailScreen({ route, navigation }: Props) {
               /*onPress={() => navigation.navigate('OrderItemDetail', { orderitem: item })}*/
             >
               <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-              <View style={styles.card}>
+              <View style={styles.cardText}>
                 
                 <Text style={styles.orderitemName}>Product: {item.title}</Text>
                 <Text style={styles.price}>Quantity: {item.quantity}</Text>
@@ -92,6 +92,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  cardText: {
+    flexDirection: 'column',  // Align image and text horizontally
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: 'flex-start',
   },
   thumbnail: {
     width: 40,
