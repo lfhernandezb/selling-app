@@ -29,55 +29,64 @@ export default function ProductsScreen({ navigation }: Props) {
     Alert.alert("Selection Changed", `You selected: ${itemValue}`);
     console.log("page before: ", page);
     setPage((prevPage) => 1);
-    console.log("page after: ", page);
-    console.log("products before: ", products);
-    setProducts([]);
-    console.log("products after: ", products);
-    fetchProducts(1, itemValue);
+    // movido a useEffect
+    // setProducts([]);
+    // fetchProducts(1, itemValue);
   };
 
   useEffect(() => {
-    fetchProducts(0);
+    fetchProducts();
     fetchProductCategories();
   }, []);
 
-  const fetchProducts = async (pageOpt?: number, itemValue?: string) => {
-    console.log("fetchProducts: ", itemValue);
+  useEffect(() => {
+    // This effect will run after categories have been updated
+    if (categories.length > 0) {
+      console.log('Categories have been updated:', categories);
+      // Perform any actions that need to happen after categories are updated
+      setItems(categories.map((category) => ({ label: category, value: category })));
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    // This effect will run after page have been updated
+    if (page > 0) {
+      console.log('Page have been updated:', page);
+      // Perform any actions that need to happen after categories are updated
+      if (page === 1) {
+        setProducts([]);
+        fetchProducts();
+      } 
+     }
+  }, [page]);
+
+  const fetchProducts = async () => {
+    console.log("fetchProducts: ", selectedValue);
     let newProducts: Product[] = [];
 
     if (loading) return;
+
     setLoading(true);
 
-    console.log("pageOpt: ", pageOpt);
     console.log("page: ", page);
 
-    if (pageOpt !== undefined) {
-      setPage(pageOpt);
-    }
-
     try {
-      if (itemValue) {
-        if (pageOpt === undefined) {
-          newProducts = await getProductsByCategory(page, limit, itemValue);
-        } else {
-          newProducts = await getProductsByCategory(pageOpt, limit, itemValue);
-        }
+      if (selectedValue && selectedValue !== 'Todas' && selectedValue !== 'option1') {
+          newProducts = await getProductsByCategory(page, limit, selectedValue);
       } else {
-        if (pageOpt === undefined) {
           newProducts = await getProducts(page, limit);
-        } else {
-          newProducts = await getProducts(pageOpt, limit);
-        }
       }
 
       console.log("newProducts: ", newProducts);
 
       // const newProducts = await getProducts(page, limit); //(response.data as { products: Product[] }).products;
-      
-      setProducts((prevProducts) => [...prevProducts, ...newProducts]);
-      console.log("page before: ", page);
+
+      if (page === 1) {
+        setProducts(newProducts);
+      } else {
+        setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+      }
       setPage(page + 1);
-      console.log("page after: ", page);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -92,9 +101,10 @@ export default function ProductsScreen({ navigation }: Props) {
     try {
       const categories: string[] = await getProductCategories();
       
-      setCategories(categories);
-
-      setItems(categories.map((category) => ({ label: category, value: category })));
+      setCategories(['Todas', ...categories]);
+      
+      // movido a useEffect
+      // setItems(categories.map((category) => ({ label: category, value: category })));
 
     } catch (error) {
       console.error("Error fetching product categories:", error);
@@ -103,12 +113,9 @@ export default function ProductsScreen({ navigation }: Props) {
     setLoading(false);
   };
 
-
-    
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Products</Text>
+      <Text style={styles.title}>Productos</Text>
       <DropDownPicker
         open={open}
         value={value}
@@ -116,6 +123,7 @@ export default function ProductsScreen({ navigation }: Props) {
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
+        placeholder='Seleccione una categoría'
         onChangeValue={handleChange}
       />
       <FlatList

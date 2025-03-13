@@ -39,7 +39,7 @@ export default function ClientsScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Clients</Text>
+      <Text style={styles.title}>Clientes</Text>
       <FlatList
         data={clients}
         keyExtractor={(item) => item.id.toString()}
@@ -51,8 +51,8 @@ export default function ClientsScreen({ navigation }: Props) {
             {/*<Image source={{ uri: client.thumbnail }} style={styles.thumbnail} /> */}
             <View style={styles.cardText}>
               
-              <Text style={styles.clientName}>Name: {item.firstName} {item.lastName}</Text>
-              <Text style={styles.phone}>Phone: {item.phone}</Text>
+              <Text style={styles.clientName}>Nombre: {item.firstName} {item.lastName}</Text>
+              <Text style={styles.phone}>Fono: {item.phone}</Text>
               {/* <img className="profile-photo" src={client.thumbnail} alt={client.title}/> */}
             </View>
           </TouchableOpacity>

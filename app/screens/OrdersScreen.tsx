@@ -55,28 +55,11 @@ export default function OrdersScreen({ route, navigation }: Props) {
   };
 
   return (
-    /*
     <View style={styles.container}>
-      <Text style={styles.title}>Orders</Text>
-      <FlatList
-        data={orders}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text>{item.firstName} {item.lastName}</Text>
-            <Text>{item.email}</Text>
-            <Text>{item.phone}</Text>
-          </View>
-        )}
-      />
-    </View>
-    */
-
-    <View style={styles.container}>
-      <Text style={styles.title}>Orders</Text>
+      <Text style={styles.title}>Pedidos</Text>
       {/* if clientId is not undefined, I display the name of the client */}
       {client && 
-        <Text style={styles.title}>Client: {client.firstName} {client.lastName}</Text>
+        <Text style={styles.title}>Cliente: {client.firstName} {client.lastName}</Text>
       }
       <FlatList
         data={orders}
@@ -89,7 +72,7 @@ export default function OrdersScreen({ route, navigation }: Props) {
             {/*<Image source={{ uri: item.thumbnail }} style={styles.thumbnail} /> */}
             <View style={styles.cardText}>
               
-              <Text style={styles.orderName}>Order #{item.id}</Text>
+              <Text style={styles.orderName}>Pedido #{item.id}</Text>
               <Text style={styles.orderName}>${item.total}</Text>
               {/* <img className="profile-photo" src={item.thumbnail} alt={item.title}/> */}
             </View>
@@ -105,14 +88,6 @@ export default function OrdersScreen({ route, navigation }: Props) {
 
   );
 }
-
-/*
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
-  card: { padding: 15, backgroundColor: '#f5f5f5', marginBottom: 10, borderRadius: 5 },
-});
-*/
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },

@@ -44,11 +44,11 @@ export default function OrderDetailScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Order Items</Text>
+      <Text style={styles.title}>Ítemes del pedido</Text>
       {order && (
         <>
-          <Text style={styles.title}>Order #{order.id}</Text>
-          <Text style={styles.title}>Client: {order.client?.firstName} {order.client?.lastName}</Text>
+          <Text style={styles.title}>Pedido #{order.id}</Text>
+          <Text style={styles.title}>Cliente: {order.client?.firstName} {order.client?.lastName}</Text>
           <FlatList
             data={order.products}
             keyExtractor={(item) => item.id.toString()}
@@ -60,10 +60,10 @@ export default function OrderDetailScreen({ route, navigation }: Props) {
               <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
               <View style={styles.cardText}>
                 
-                <Text style={styles.orderitemName}>Product: {item.title}</Text>
-                <Text style={styles.price}>Quantity: {item.quantity}</Text>
-                <Text style={styles.price}>Price: ${item.price}</Text>
-                <Text style={styles.price}>Discount {item.discountPercentage}%</Text>
+                <Text style={styles.orderitemName}>{item.title}</Text>
+                <Text style={styles.price}>Cantidad: {item.quantity}</Text>
+                <Text style={styles.price}>Precio: ${item.price}</Text>
+                <Text style={styles.price}>Descuento {item.discountPercentage}%</Text>
                 {/* <img className="profile-photo" src={item.thumbnail} alt={item.title}/> */}
               </View>
         

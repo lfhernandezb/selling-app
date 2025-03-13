@@ -13,9 +13,9 @@ export default function HomeScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Selling App</Text>
-      <Button title="Manage Clients" onPress={() => navigation.navigate('Clients')} />
-      <Button title="Manage Products" onPress={() => navigation.navigate('Products')} />
-      <Button title="Manage Orders" onPress={() => navigation.navigate('Orders', { clientId: undefined })} />
+      <Button title="Clientes" onPress={() => navigation.navigate('Clients')} />
+      <Button title="Productos" onPress={() => navigation.navigate('Products')} />
+      <Button title="Pedidos" onPress={() => navigation.navigate('Orders', { client: undefined })} />
     </View>
   );
 }

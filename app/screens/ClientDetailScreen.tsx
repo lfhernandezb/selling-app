@@ -70,19 +70,19 @@ export default function ClientDetailScreen({ route, navigation }: Props) {
     */
 
     <View style={styles.container}>
-      <Text style={styles.title}>Client: {client.firstName} {client.lastName}</Text>
+      <Text style={styles.title}>Cliente: {client.firstName} {client.lastName}</Text>
       <View style={styles.cardText}>
             
-            <Text style={styles.phone}>Phone: {client.phone}</Text>
+            <Text style={styles.phone}>Fono: {client.phone}</Text>
             <Text style={styles.phone}>Email: {client.email}</Text>
-            <Text style={styles.phone}>Adress</Text>
-            <Text style={styles.phone}>Street: {client.address.address}</Text>
-            <Text style={styles.phone}>City: {client.address.city}</Text>
-            <Text style={styles.phone}>State: {client.address.state}</Text>
-            <Text style={styles.phone}>State Code: {client.address.stateCode}</Text>
-            <Text style={styles.phone}>Country: {client.address.country}</Text>
+            <Text style={styles.phone}>Dirección</Text>
+            <Text style={styles.phone}>Calle: {client.address.address}</Text>
+            <Text style={styles.phone}>Ciudad: {client.address.city}</Text>
+            <Text style={styles.phone}>Estado: {client.address.state}</Text>
+            <Text style={styles.phone}>Código estado: {client.address.stateCode}</Text>
+            <Text style={styles.phone}>País: {client.address.country}</Text>
             <View style={styles.footer}>
-              <Button title="Orders" onPress={() => showClientOrders(client)()} />
+              <Button title="Pedidos" onPress={() => showClientOrders(client)()} />
             </View>
       </View>
     </View>
