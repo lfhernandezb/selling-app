@@ -57,12 +57,12 @@ export default function ClientsScreen({ navigation }: Props) {
             </View>
           </TouchableOpacity>
         )}
-        ListFooterComponent={() => (
-          <View style={styles.footer}>
-            {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Load More" onPress={fetchClients} />}
-          </View>
-        )}
       />
+      {clients.length > 0 && clients.length % limit === 0 &&
+        <View style={styles.footer}>
+          {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Mostrar más" onPress={fetchClients} />}
+        </View>
+      }
     </View>
 
   );

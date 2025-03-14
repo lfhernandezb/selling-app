@@ -78,12 +78,12 @@ export default function OrdersScreen({ route, navigation }: Props) {
             </View>
           </TouchableOpacity>
         )}
-        ListFooterComponent={() => (
-          <View style={styles.footer}>
-            {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Load More" onPress={fetchOrders} />}
-          </View>
-        )}
       />
+      {orders.length > 0 && orders.length % limit === 0 &&
+      <View style={styles.footer}>
+        {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Mostrar más" onPress={fetchOrders} />}
+      </View>
+      }
     </View>
 
   );

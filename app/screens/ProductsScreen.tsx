@@ -24,10 +24,11 @@ export default function ProductsScreen({ navigation }: Props) {
 
   const handleChange = (itemValue: string | null) => {
     console.log("itemValue: ", itemValue);
+
     if (itemValue === null) return;
+
     setSelectedValue(itemValue);
-    Alert.alert("Selection Changed", `You selected: ${itemValue}`);
-    console.log("page before: ", page);
+
     setPage((prevPage) => 1);
     // movido a useEffect
     // setProducts([]);
@@ -143,12 +144,12 @@ export default function ProductsScreen({ navigation }: Props) {
             </View>
           </TouchableOpacity>
         )}
-        ListFooterComponent={() => (
-          <View style={styles.footer}>
-            {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Load More" onPress={() => fetchProducts()} />}
-          </View>
-        )}
       />
+      {products.length > 0 && products.length % limit === 0 &&
+        <View style={styles.footer}>
+          {loading ? <ActivityIndicator size="large" color="#007AFF" /> : <Button title="Mostrar más" onPress={() => fetchProducts()} />}
+        </View>
+      }
     </View>
   );
 }
